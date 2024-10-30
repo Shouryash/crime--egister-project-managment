@@ -1,0 +1,46 @@
+-- Table for storing crime information
+create database crime_management_project;
+use crime_management_project;
+CREATE TABLE Crime (
+    crimeid INT AUTO_INCREMENT PRIMARY KEY,
+    dateofcrime DATE NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    policestationid INT NOT NULL,
+    detaildescription TEXT,
+    status ENUM('Solved', 'Not_Solved') NOT NULL
+);
+
+
+
+
+-- Table for storing criminal information
+CREATE TABLE Criminal (
+    criminalid INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    age INT NOT NULL,
+    gender ENUM('Male', 'Female', 'Other') NOT NULL,
+    address VARCHAR(255),
+    policestationid INT NOT NULL,
+    mark VARCHAR(255)
+);
+Drop table Criminal;
+
+-- Table for storing victim information
+CREATE TABLE victimofcrime (
+    victimid INT AUTO_INCREMENT PRIMARY KEY,
+    crimeid INT NOT NULL,
+    name VARCHAR(100),
+    age INT ,
+    gender ENUM('Male', 'Female', 'Other'),
+    address VARCHAR(255),
+    FOREIGN KEY (crimeid) REFERENCES Crime(crimeid) ON DELETE CASCADE
+);
+drop table victimofcrime;
+-- Table to link criminals to crimes
+CREATE TABLE criminalsofcrime (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    crimeId INT NOT NULL,
+    criminalid INT NOT NULL,  -- Ensure the column name here matches the FK reference
+    FOREIGN KEY (crimeId) REFERENCES Crime(crimeId) ON DELETE CASCADE,
+    FOREIGN KEY (criminalid) REFERENCES Criminal(criminalid) ON DELETE CASCADE
+);S
